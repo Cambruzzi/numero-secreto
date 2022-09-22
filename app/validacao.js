@@ -1,13 +1,22 @@
 function verificaSeOChutePossuiUmValorValido(chute){
     const numero = +chute
 
+    if (chute === 'game over' || chute === 'desisto'){
+        document.body.innerHTML = `
+        <h2>Você desistiu!</h2>
+        <h3>O número secreto era ${numeroSecreto}</h3>
+        <button id="jogar-novamente" class="btn-jogar">Jogar Novamente</button>
+
+    `
+    }
+
     if ( chuteForInvalido(numero) ){
         elementoChute.innerHTML += `<div> Valor Inválido. Fale um número entre ${menorValor} e ${maiorValor} </div>`
         return
     }
 
     if (numeroForMaiorOuMenorQueOValorPermitido(numero)){
-        elementoChute.innerHTML += `<div>Valor invalido: Fale um numero precisa estar entre ${menorValor} e ${maiorValor}</div>`
+        elementoChute.innerHTML += `<div>Valor invalido: O numero precisa estar entre ${menorValor} e ${maiorValor}</div>`
         return
     }
 
@@ -21,6 +30,7 @@ function verificaSeOChutePossuiUmValorValido(chute){
             <button id="jogar-novamente" class="btn-jogar">Jogar Novamente</button>
 
         `
+        mostraResultado(contaChute)
 
     } else if (numero < numeroSecreto){
         elementoChute.innerHTML+= `
@@ -36,6 +46,7 @@ function verificaSeOChutePossuiUmValorValido(chute){
 }
 
 function chuteForInvalido(numero){
+    
     return Number.isNaN(numero)
 }
 
@@ -50,3 +61,16 @@ document.body.addEventListener('click', e => {
 
     }
 })
+
+function mostraResultado(resultado){
+    if(resultado > 1){
+        document.body.innerHTML += `
+        <div class="conta-result">Você precisou de ${resultado} vezes para acertar</div>
+
+    `
+    }else{
+        document.body.innerHTML += `
+        <div class="conta-result">Você precisou de ${resultado} vez para acertar</div>
+    `
+    }
+}
